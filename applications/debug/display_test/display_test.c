@@ -86,11 +86,13 @@ static void display_test_reload_config(DisplayTest* instance) {
         instance->config_contrast,
         instance->config_regulation_ratio,
         instance->config_bias);
+#ifndef PC
     u8x8_d_st756x_init(
         &instance->gui->canvas->fb.u8x8,
         instance->config_contrast,
         instance->config_regulation_ratio,
         instance->config_bias);
+#endif
 }
 
 static void display_config_set_bias(VariableItem* item) {

@@ -23,8 +23,12 @@ Canvas* canvas_init(void) {
     // Initialize callback array
     CanvasCallbackPairArray_init(canvas->canvas_callback_pair);
 
-    // Setup u8g2
+// Setup u8g2
+#ifdef PC
+    u8g2_SetupBuffer_SDL_128x64_1(&canvas->fb, &u8g2_cb_r0);
+#else
     u8g2_Setup_st756x_flipper(&canvas->fb, U8G2_R0, u8x8_hw_spi_stm32, u8g2_gpio_and_delay_stm32);
+#endif
     canvas->orientation = CanvasOrientationHorizontal;
     // Initialize display
     u8g2_InitDisplay(&canvas->fb);

@@ -1,0 +1,5 @@
+#define TAG "Main"
+
+int main() {
+    return 0;
+}

@@ -5,6 +5,7 @@
 #define CONTRAST_ERC 32
 #define CONTRAST_MGG 28
 
+#ifndef PC
 uint8_t u8g2_gpio_and_delay_stm32(u8x8_t* u8x8, uint8_t msg, uint8_t arg_int, void* arg_ptr) {
     UNUSED(u8x8);
     UNUSED(arg_ptr);
@@ -280,3 +281,4 @@ void u8g2_Setup_st756x_flipper(
     buf = u8g2_m_16_8_f(&tile_buf_height);
     u8g2_SetupBuffer(u8g2, buf, tile_buf_height, u8g2_ll_hvline_vertical_top_lsb, rotation);
 }
+#endif
