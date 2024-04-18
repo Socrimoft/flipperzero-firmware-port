@@ -1,18 +1,23 @@
 #include "furi.h"
 #include <string.h>
 
+#ifndef PC
 #include <FreeRTOS.h>
+#endif
 #include <queue.h>
 
 void furi_init(void) {
+#ifndef PC
     furi_check(!furi_kernel_is_irq_or_masked());
     furi_check(xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED);
+#endif
 
     furi_log_init();
     furi_record_init();
 }
 
 void furi_run(void) {
+#ifndef PC
     furi_check(!furi_kernel_is_irq_or_masked());
     furi_check(xTaskGetSchedulerState() == taskSCHEDULER_NOT_STARTED);
 
@@ -25,4 +30,5 @@ void furi_run(void) {
 
     /* Start the kernel scheduler */
     vTaskStartScheduler();
+#endif
 }

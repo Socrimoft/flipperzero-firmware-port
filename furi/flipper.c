@@ -5,7 +5,9 @@
 #include <furi_hal_memory.h>
 #include <furi_hal_rtc.h>
 
+#ifndef PC
 #include <FreeRTOS.h>
+#endif
 
 #define TAG "Flipper"
 
