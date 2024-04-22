@@ -27,33 +27,65 @@ for env_value_name in variables_to_forward:
     if environ_value := os.environ.get(env_value_name, None):
         forward_os_env[env_value_name] = environ_value
 
-coreenv = VAR_ENV.Clone(
-    tools=[
-        "fbt_tweaks",
-        (
-            "crosscc",
-            {
-                "toolchain_prefix": "arm-none-eabi-",
-                "versions": VAR_ENV["FBT_TOOLCHAIN_VERSIONS"],
-            },
-        ),
-        "python3",
-        "sconsmodular",
-        "sconsrecursiveglob",
-        "ccache",
-    ],
-    TEMPFILE=TempFileMunge,
-    POSIXPATH=PosixPathWrapper,
-    MAXLINELENGTH=2048,
-    PROGSUFFIX=".elf",
-    ENV=forward_os_env,
-    SINGLEQUOTEFUNC=single_quote,
-    ABSPATHGETTERFUNC=resolve_real_dir_node,
-    # Setting up temp file parameters - to overcome command line length limits
-    TEMPFILEARGESCFUNC=tempfile_arg_esc_func,
-    ROOT_DIR=Dir("#"),
-    FBT_SCRIPT_DIR=Dir("#/scripts"),
-)
+target_hw = VAR_ENV["TARGET_HW"]
+
+if target_hw in ["7", "18"]:
+    coreenv = VAR_ENV.Clone(
+        tools=[
+            "fbt_tweaks",
+            (
+                "crosscc",
+                {
+                    "toolchain_prefix": "arm-none-eabi-",
+                    "versions": VAR_ENV["FBT_TOOLCHAIN_VERSIONS"],
+                },
+            ),
+            "python3",
+            "sconsmodular",
+            "sconsrecursiveglob",
+            "ccache",
+        ],
+        TEMPFILE=TempFileMunge,
+        POSIXPATH=PosixPathWrapper,
+        MAXLINELENGTH=2048,
+        PROGSUFFIX=".elf",
+        ENV=forward_os_env,
+        SINGLEQUOTEFUNC=single_quote,
+        ABSPATHGETTERFUNC=resolve_real_dir_node,
+        # Setting up temp file parameters - to overcome command line length limits
+        TEMPFILEARGESCFUNC=tempfile_arg_esc_func,
+        ROOT_DIR=Dir("#"),
+        FBT_SCRIPT_DIR=Dir("#/scripts"),
+    )
+
+elif target_hw == "pc":
+    coreenv = VAR_ENV.Clone(
+        tools=[
+            "fbt_tweaks",
+            (
+                "crosscc",
+                {
+                    "toolchain_prefix": "",
+                    "versions": VAR_ENV["FBT_TOOLCHAIN_VERSIONS"],
+                },
+            ),
+            "python3",
+            "sconsmodular",
+            "sconsrecursiveglob",
+            "ccache",
+        ],
+        TEMPFILE=TempFileMunge,
+        POSIXPATH=PosixPathWrapper,
+        MAXLINELENGTH=2048,
+        PROGSUFFIX=".exe",
+        ENV=forward_os_env,
+        SINGLEQUOTEFUNC=single_quote,
+        ABSPATHGETTERFUNC=resolve_real_dir_node,
+        # Setting up temp file parameters - to overcome command line length limits
+        TEMPFILEARGESCFUNC=tempfile_arg_esc_func,
+        ROOT_DIR=Dir("#"),
+        FBT_SCRIPT_DIR=Dir("#/scripts"),
+    )
 
 # If DIST_SUFFIX is set in environment, is has precedence (set by CI)
 if os_suffix := os.environ.get("DIST_SUFFIX", None):

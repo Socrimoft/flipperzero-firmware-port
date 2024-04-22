@@ -49,3 +49,28 @@ ENV.AppendUnique(
         "-Wl,--no-warn-rwx-segment",
     ],
 )
+
+target_hw = ENV["TARGET_HW"]
+
+if target_hw == "pc":
+    ENV.Replace(
+        CCFLAGS=[
+            # "-MMD",
+            # "-MP",
+            "-Wall",
+            "-Wextra",
+            "-Werror",
+            "-Wno-error=deprecated-declarations",
+            "-Wno-address-of-packed-member",
+            "-Wredundant-decls",
+            "-Wdouble-promotion",
+            "-fdata-sections",
+            "-ffunction-sections",
+            "-fsingle-precision-constant",
+            "-fno-math-errno",
+            # Generates .su files with stack usage information
+            # "-fstack-usage",
+            "-g",
+        ],
+        LINKFLAGS=[],
+    )

@@ -2,35 +2,44 @@ Import("ENV")
 
 
 if ENV["DEBUG"]:
-    ENV.Append(
-        CPPDEFINES=[
-            "FURI_DEBUG",
-            "NDEBUG",
-        ],
-        CCFLAGS=[
-            "-Og",
-        ],
-    )
+    CPPDEFINES=[
+        "FURI_DEBUG",
+        "NDEBUG",
+    ]
+    CCFLAGS=[
+        "-Og",
+    ]
+
 elif ENV["COMPACT"]:
-    ENV.Append(
-        CPPDEFINES=[
-            "FURI_NDEBUG",
-            "NDEBUG",
-        ],
-        CCFLAGS=[
-            "-Os",
-        ],
-    )
+    CPPDEFINES=[
+        "FURI_NDEBUG",
+        "NDEBUG",
+    ]
+    CCFLAGS=[
+        "-Os",
+    ]
+
 else:
-    ENV.Append(
-        CPPDEFINES=[
-            "FURI_NDEBUG",
-            "NDEBUG",
-        ],
-        CCFLAGS=[
-            "-Og",
-        ],
-    )
+    CPPDEFINES=[
+        "FURI_NDEBUG",
+        "NDEBUG",
+    ]
+    CCFLAGS=[
+        "-Og",
+    ]
+
+target_hw = ENV["TARGET_HW"]
+
+if target_hw in ["7", "18"]:
+    CPPDEFINES.append("STM32");
+
+elif target_hw == "pc":
+    CPPDEFINES.append("PC");
+
+ENV.Append(
+    CPPDEFINES=CPPDEFINES,
+    CCFLAGS=CCFLAGS,
+)
 
 ENV.AppendUnique(
     LINKFLAGS=[

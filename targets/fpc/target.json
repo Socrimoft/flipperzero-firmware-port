@@ -1,0 +1,12 @@
+{
+    "include_paths": [
+        "furi_hal"
+    ],
+    "sdk_header_paths": [
+        "../furi_hal_include",
+        "furi_hal"
+    ],
+    "startup_script": "main.c",
+    "sdk_symbols": "api_symbols.csv",
+    "linker_dependencies": []
+}

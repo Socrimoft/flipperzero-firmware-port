@@ -58,21 +58,23 @@ def generate(env, **kw):
     env.SetDefault(
         TOOLCHAIN_PREFIX=kw.get("toolchain_prefix"),
     )
+    cmd_list = [
+        "AR",
+        "AS",
+        "CC",
+        "CXX",
+        "OBJCOPY",
+        "RANLIB",
+        "STRIP",
+        "GDB",
+        "OBJDUMP",
+    ]
+    if env["TARGET_HW"] in ["7", "18"]:
+        cmd_list.append("GDBPY")
     prefix_commands(
         env,
         env.subst("$TOOLCHAIN_PREFIX"),
-        [
-            "AR",
-            "AS",
-            "CC",
-            "CXX",
-            "OBJCOPY",
-            "RANLIB",
-            "STRIP",
-            "GDB",
-            "GDBPY",
-            "OBJDUMP",
-        ],
+        cmd_list,
     )
     # Call CC to check version
     if whitelisted_versions := kw.get("versions", ()):
