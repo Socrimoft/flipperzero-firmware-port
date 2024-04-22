@@ -1,12 +1,4 @@
-<picture>
-    <source media="(prefers-color-scheme: dark)" srcset="/.github/assets/dark_theme_banner.png">
-    <source media="(prefers-color-scheme: light)" srcset="/.github/assets/light_theme_banner.png">
-    <img
-        alt="A pixel art of a Dophin with text: Flipper Zero Official Repo"
-        src="/.github/assets/light_theme_banner.png">
-</picture>
-
-# Flipper Zero Firmware
+# Flipper Zero Firmware Port
 
 - [Flipper Zero Official Website](https://flipperzero.one). A simple way to explain to your friends what Flipper Zero can do.
 - [Flipper Zero Firmware Update](https://update.flipperzero.one). Improvements for your dolphin: latest firmware releases, upgrade tools for PC and mobile devices.
@@ -72,6 +64,14 @@ Build firmware using Flipper Build Tool:
 ```shell
 ./fbt
 ```
+
+Build firmware for Windows pc using Flipper Build Tool:
+
+```shell
+./fbt TARGET_HW=pc
+```
+
+Make sure you have an installation of the mingw-w64-x86_64 toolchain in your PATH to build for windows.
 
 ## Flashing firmware using an in-circuit debugger
 
